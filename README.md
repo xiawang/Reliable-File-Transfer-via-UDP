@@ -13,7 +13,7 @@ Environment being tested
 
 The testing environment is somewhat rediculous:
 
-| RTT            | Loss rate   | Throughput                                  |
-| -------------- | ----------- | --------------------------------------------|
-| 5 October 2014 | 14:00-16:00 | [[Meeting Notes Oct 5|Meeting Notes Oct 5]] |
-| 9 October 2014 | 14:00-16:00 | [[Meeting Notes Oct 9|Meeting Notes Oct 9]] |
+| Link Speed  | RTT        | Loss rate   | Throughput                       |
+| ----------- | ---------- | ----------- | -------------------------------  |
+| 100Mbp/s    | 10 ms      | 1%          |  being tested                    |
+| 100Mbp/s    | 200 ms     | 20%         |  being tested                    |

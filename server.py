@@ -5,9 +5,10 @@ import os
 import StringIO
 import pickle
 import urllib2
+import threading
 
-TIMEOUT = .5
-PACKETSIZE = 100
+TIMEOUT = 1
+PACKETSIZE = 600
 FILE = 'out.txt'
 
 def main(address, portNum):
@@ -18,7 +19,7 @@ def main(address, portNum):
     TCP_IP = address
 
     TCP_PORT = int(portNum)
-    BUFFER_SIZE =  10244564 # Normally 1024, but we want fast response
+    BUFFER_SIZE =  700 # Normally 1024, but we want fast response
 
     tcpSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tcpSocket.bind((TCP_IP, TCP_PORT))
@@ -46,10 +47,11 @@ def main(address, portNum):
         i += 1
 
 
+    droppedPacketList = range(numPackets)
     while True:
 
         try:
-            udpData, udpAddr = udpSocket.recvfrom(1024) # buffer size is 1024 bytes
+            udpData, udpAddr = udpSocket.recvfrom(50000) # buffer size is 1024 bytes
             udpData = pickle.loads(udpData)
 
             seenPercent = []
@@ -57,13 +59,14 @@ def main(address, portNum):
             for key in udpData:
 
                 percent =  int((100* (int(key) + 1) / numPackets))
-                print percent
+                if percent not in seenPercent:
+                    print percent
+                    seenPercent.append(percent)
                 packetDict[int(key)] = udpData[key]
 
         except:
             print "accepting tcpSocket"
             tcpConn, tcpAddr = tcpSocket.accept()
-            droppedPacketList = []
 
             tmpList = []
 
@@ -72,10 +75,10 @@ def main(address, portNum):
                      tmpList += [i]
             droppedPacketList = tmpList
 
-
             print "sending packetList"
             tcpConn.sendall(str(droppedPacketList))
             print "sent packetList"
+
 
             if (droppedPacketList == []):
 
@@ -88,5 +91,8 @@ def main(address, portNum):
                 return
 
 
+
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
+
+

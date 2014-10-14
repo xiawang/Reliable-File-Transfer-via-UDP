@@ -4,12 +4,15 @@ import time
 import pickle
 import os
 import ast
+import threading
 
 ## 134.173.24.150
 
-PACKETSIZE = 100
-FILE = 'file.txt'
+PACKETSIZE = 600
+# FILE = 'file.txt'
+FILE = 'small.txt'
 TIMEOUT = 0.4
+BUFFER_SIZE = 1024
 
 
 def readChunks(file_object, chunk_size=1024):
@@ -22,7 +25,6 @@ def readChunks(file_object, chunk_size=1024):
 def main(address, portNum):
     TCP_IP = address
     TCP_PORT = int(portNum)
-    BUFFER_SIZE = 1024345
     UDP_IP = address
     UDP_PORT = int(portNum)
 
@@ -63,6 +65,7 @@ def main(address, portNum):
 
         for packetNum in packetList:
 
+            time.sleep(.002)
 
             udpSocket = socket.socket(socket.AF_INET, # Internet
                                 socket.SOCK_DGRAM) # UDP
@@ -85,26 +88,23 @@ def main(address, portNum):
                 while 1:
                     data = tcpSocket.recv(BUFFER_SIZE)
                     if type(data) == str:
-                        print data
                         serverResponse += data
                     if data[-1] == ']': break
+                    if not data: break
                 print "response recieved"
 
-
         try:
+            print serverResponse
             packetList = ast.literal_eval(serverResponse)
         except:
-            print "OH NO, NO PACKETLIST"
+            print "No Packet List"
             packetList = [0]
 
 
-        tcpSocket.close()
 
 
 
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
-
-
 
 

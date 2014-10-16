@@ -15,5 +15,5 @@ The testing environment is somewhat rediculous:
 
 | Link Speed  | RTT        | Loss rate   | Throughput                       |
 | ----------- | ---------- | ----------- | -------------------------------  |
-| 100Mbp/s    | 10 ms      | 1%          |  being tested                    |
+| 100Mbp/s    | 10 ms      | 1%          |  186 KB                          |
 | 100Mbp/s    | 200 ms     | 20%         |  being tested                    |

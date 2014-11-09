@@ -17,3 +17,10 @@ The testing environment is somewhat rediculous:
 | ----------- | ---------- | ----------- | -------------------------------  |
 | 100Mbp/s    | 10 ms      | 1%          |  186 KB                          |
 | 100Mbp/s    | 200 ms     | 20%         |  being tested                    |
+
+
+Things being improved
+==============================
+
+1. ACK via UDP (TCP before)
+2. ACK with bit map (list before)
